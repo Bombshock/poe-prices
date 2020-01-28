@@ -1,0 +1,23 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <span>Stashes</span>
+    <span class="spacer"></span>
+    <button mat-icon-button>
+      <mat-icon aria-label="refresh" (click)="container.refresh()">refresh</mat-icon>
+    </button>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<div fxLayout="column" *ngIf="container.stashResult" class="stash-list__list">
+  <div *ngFor="let stash of container.stashResult.tabs" fxLayout="row">
+    <button fxFlex="1" mat-button mat-list-item (click)="navigate(stash)"
+      [class.active]="container.activeIndex == stash.i">
+      {{ stash.n }}
+    </button>
+  </div>
+</div>
+
+<div class="center-box" *ngIf="!container.stashResult">
+  <mat-progress-spinner mode="indeterminate">
+  </mat-progress-spinner>
+</div>

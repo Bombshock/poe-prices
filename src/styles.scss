@@ -1,0 +1,41 @@
+/* You can add global styles to this file, and also import other style files */
+@import "@angular/material/prebuilt-themes/indigo-pink.css";
+
+[fxlayout="row"] {
+  display: flex !important;
+  flex-direction: row;
+  align-items: center;
+  max-height: 100%;
+  overflow: hidden;
+
+}
+
+[fxlayout="column"] {
+  display: flex !important;
+  flex-direction: column;
+  max-height: 100%;
+  overflow: hidden;
+
+}
+
+[fxflex="1"] {
+  flex: 1;
+  max-height: 100%;
+  overflow: hidden;
+
+}
+
+[fxFill] {
+  display: flex;
+  flex-grow: 1;
+  max-height: 100%;
+  overflow: hidden;
+
+}
+
+body {
+  display: flex;
+  max-height: 100%;
+  overflow: hidden;
+
+}

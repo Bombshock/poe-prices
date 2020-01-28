@@ -1,0 +1,23 @@
+<div fxLayout="column" class="auth__mid-box" *ngIf="!isLoading">
+  <div fxLayout="row" flex="1">
+    <mat-form-field fxFlex="1">
+      <input matInput placeholder="Username" (keyup.enter)="send()" [(ngModel)]="username">
+    </mat-form-field>
+  </div>
+  <div fxLayout="row">
+    <mat-form-field fxFlex="1">
+      <input matInput placeholder="Session" (keyup.enter)="send()" [(ngModel)]="session">
+    </mat-form-field>
+  </div>
+  <div fxLayout="row">
+    <button mat-raised-button color="primary" aria-label="send auth" (click)="send()">
+      Login
+    </button>
+    <div class="auth__auth-error-message" *ngIf="couldNotLogin">
+      Login was not possible.
+    </div>
+  </div>
+</div>
+
+<mat-progress-spinner mode="indeterminate" *ngIf="isLoading">
+</mat-progress-spinner>
