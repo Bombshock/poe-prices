@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { StashContainerComponent } from '../stash-container/stash-container.component';
 import { ComparatorService } from 'src/app/services/comparator.service';
-import { Item, ItemListing, ItemQueryResultMapped } from 'src/app/models/item';
+import { Item, ItemQueryResultMapped } from 'src/app/models/item';
 import { weights } from 'src/app/models/currencyWeight';
 import { ItemFilterPipe } from 'src/app/pipes/item-filter.pipe';
 import { ApiService } from 'src/app/services/api.service';

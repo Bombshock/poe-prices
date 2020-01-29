@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
-import { Item, ItemListing, ItemModMap, ItemQueryResult, ItemQueryResultMapped } from '../models/item';
+import { Item, ItemQueryResult, ItemQueryResultMapped } from '../models/item';
 import { HttpClient } from '@angular/common/http';
 import { StatGroup } from '../models/stat';
-import { normalize } from 'path';
 
 @Injectable( {
   providedIn: 'root'
