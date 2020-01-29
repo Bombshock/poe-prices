@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { StashContainerComponent } from '../stash-container/stash-container.component';
 import { ComparatorService } from 'src/app/services/comparator.service';
-import { Item, ItemListing } from 'src/app/models/item';
+import { Item, ItemListing, ItemQueryResultMapped } from 'src/app/models/item';
 import { weights } from 'src/app/models/currencyWeight';
 import { ItemFilterPipe } from 'src/app/pipes/item-filter.pipe';
 import { ApiService } from 'src/app/services/api.service';
 import { StaticItem, StaticGroup } from 'src/app/models/static';
+import { MatDialog } from '@angular/material/dialog';
+import { ItemDetailsComponent } from '../item-details/item-details.component';
 
 @Component( {
   selector: 'app-stash-details',
@@ -27,6 +29,8 @@ export class StashDetailsComponent implements OnInit {
 
   constructor(
     public container: StashContainerComponent,
+
+    private dialog: MatDialog,
     private api: ApiService,
     private comp: ComparatorService
   ) { }
@@ -36,6 +40,7 @@ export class StashDetailsComponent implements OnInit {
     this.currency.entries.forEach( entry => {
       this.currencyMap[ entry.id ] = entry;
     } );
+    console.log( await this.comp.getStatGroup( 'Explicit' ) )
   }
 
   public load() {
@@ -45,7 +50,7 @@ export class StashDetailsComponent implements OnInit {
     items.forEach( item => {
       this.queue.push( () => {
         return this.comp.search( item )
-          .then( ( result: ItemListing ) => {
+          .then( ( result: ItemQueryResultMapped ) => {
             item.result = result;
             this.open--;
             this.sort();
@@ -57,7 +62,9 @@ export class StashDetailsComponent implements OnInit {
   }
 
   public showItem( item: Item ) {
-
+    this.dialog.open( ItemDetailsComponent, {
+      data: { item }
+    } );
   }
 
   public sort() {
@@ -71,8 +78,8 @@ export class StashDetailsComponent implements OnInit {
       if ( !a.result && !b.result ) {
         return a.x - b.x;
       }
-      const bc = weights[ b.result.listing.price.currency ] * b.result.listing.price.amount;
-      const ac = weights[ a.result.listing.price.currency ] * a.result.listing.price.amount;
+      const bc = weights[ b.result.result[ 0 ].listing.price.currency ] * b.result.result[ 0 ].listing.price.amount;
+      const ac = weights[ a.result.result[ 0 ].listing.price.currency ] * a.result.result[ 0 ].listing.price.amount;
       return bc - ac;
     } )
   }

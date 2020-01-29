@@ -35,9 +35,9 @@
         </div>
         <div class="stash-details__item-list__item__worth">
           <span *ngIf="item.result" fxLayout="row">
-            {{ item.result.listing.price.amount }}
-            <img [src]="'https://www.pathofexile.com' + currencyMap[item.result.listing.price.currency].image"
-              [alt]="currencyMap[item.result.listing.price.currency].text">
+            {{ item.result.result[0].listing.price.amount }}
+            <img [src]="'https://www.pathofexile.com' + currencyMap[item.result.result[0].listing.price.currency].image"
+              [alt]="currencyMap[item.result.result[0].listing.price.currency].text">
           </span>
         </div>
       </div>

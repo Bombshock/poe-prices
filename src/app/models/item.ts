@@ -16,9 +16,14 @@ export type Item = {
     w: number;
     x: number;
     y: number;
-    result?: ItemListing;
+    result?: ItemQueryResultMapped;
     stackSize: number;
     maxStackSize: number;
+    sockets?: {
+        attr: string;
+        group: number;
+        sColour: 'R' | 'G' | 'B'
+    }[]
 }
 
 export type ItemListing = {
@@ -35,3 +40,17 @@ export type ItemListing = {
         }
     }
 }
+
+export type ItemQueryResult = {
+    id: string;
+    result: string[];
+    total: number;
+}
+
+export type ItemQueryResultMapped = {
+    id: string;
+    result: ItemListing[];
+    total: number;
+}
+
+export type ItemModMap = { [ key: string ]: number };

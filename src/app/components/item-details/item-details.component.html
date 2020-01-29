@@ -1,0 +1,45 @@
+<div fxLayout="row">
+  <div class="item-details__icon" [class.loaded]="iconLoaded" fxLayout="column">
+    <img [src]="data.item.icon" #icon>
+    <mat-progress-spinner *ngIf="!iconLoaded" mode="indeterminate">
+    </mat-progress-spinner>
+    <button mat-raised-button (click)="scan()" color="primary" *ngIf="iconLoaded">scan</button>
+  </div>
+
+  <div class="item-details__data" fxLayout="column">
+    <div class="item-details__data__data-set center">
+      <div>
+        {{ data.item.name }}
+      </div>
+      <div>
+        {{ data.item.typeLine }}
+      </div>
+    </div>
+    <div class="item-details__data__data-set center" *ngIf="data.item.implicitMods && data.item.implicitMods.length">
+      <div>Implicit</div>
+      <div *ngFor="let mod of data.item.implicitMods">
+        {{ mod }}
+      </div>
+    </div>
+    <div class="item-details__data__data-set center" *ngIf="data.item.explicitMods && data.item.explicitMods.length">
+      <div>Explicit</div>
+      <div *ngFor="let mod of data.item.explicitMods">
+        {{ mod }}
+      </div>
+    </div>
+    <div class="item-details__data__data-set center" *ngIf="data.item.result" fxLayout="row">
+      {{ data.item.result.result[0].listing.price.amount }}
+      <img height="32"
+        [src]="'https://www.pathofexile.com' + currencyMap[data.item.result.result[0].listing.price.currency].image"
+        *ngIf="currencyMap[data.item.result.result[0].listing.price.currency]">
+    </div>
+    <div class="item-details__data__data-set center" *ngIf="data.item.result">
+      <button mat-button (click)="openRefSearch(data.item.result.id)">
+        <mat-icon>
+          link
+        </mat-icon>
+        {{ data.item.result.id }}
+      </button>
+    </div>
+  </div>
+</div>

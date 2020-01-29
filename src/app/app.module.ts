@@ -16,6 +16,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
@@ -24,6 +25,7 @@ import { TitleBarComponent } from './components/title-bar/title-bar.component';
 import { StashContainerComponent } from './components/stash-container/stash-container.component';
 import { StashDetailsComponent } from './components/stash-details/stash-details.component';
 import { ItemFilterPipe } from './pipes/item-filter.pipe';
+import { ItemDetailsComponent } from './components/item-details/item-details.component';
 
 const appRoutes: Routes = [
   {
@@ -51,7 +53,8 @@ const appRoutes: Routes = [
     TitleBarComponent,
     StashContainerComponent,
     StashDetailsComponent,
-    ItemFilterPipe
+    ItemFilterPipe,
+    ItemDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -68,6 +71,7 @@ const appRoutes: Routes = [
     MatGridListModule,
     MatDividerModule,
     MatProgressBarModule,
+    MatDialogModule,
 
     RouterModule.forRoot(
       appRoutes,
@@ -75,6 +79,9 @@ const appRoutes: Routes = [
     )
   ],
   providers: [],
-  bootstrap: [ AppComponent ]
+  bootstrap: [ AppComponent ],
+  entryComponents: [
+    ItemDetailsComponent
+  ]
 } )
 export class AppModule { }

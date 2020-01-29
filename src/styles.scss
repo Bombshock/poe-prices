@@ -7,7 +7,6 @@
   align-items: center;
   max-height: 100%;
   overflow: hidden;
-
 }
 
 [fxlayout="column"] {
@@ -15,14 +14,12 @@
   flex-direction: column;
   max-height: 100%;
   overflow: hidden;
-
 }
 
 [fxflex="1"] {
   flex: 1;
   max-height: 100%;
   overflow: hidden;
-
 }
 
 [fxFill] {
@@ -30,12 +27,10 @@
   flex-grow: 1;
   max-height: 100%;
   overflow: hidden;
-
 }
 
 body {
   display: flex;
   max-height: 100%;
   overflow: hidden;
-
 }
