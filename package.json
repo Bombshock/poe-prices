@@ -8,7 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "start-e": "electron .",
+    "start-e": "electron . --dev",
     "build-e": "ng build --prod && electron-builder"
   },
   "main": "main.js",
