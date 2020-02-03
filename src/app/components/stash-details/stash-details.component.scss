@@ -53,17 +53,13 @@
 .stash-details__item-list__item__worth {
   min-width: 100px;
   text-align: right;
-
-  span {
-    justify-content: flex-end;
-
-    img {
-      max-height: 32px;
-    }
-  }
 }
 
 .stash-details__item-list__item__coords {
   min-width: 60px;
   text-align: center;
+}
+
+.stash-details__item-list__item__max-stack-size {
+  color: rgba(0, 0, 0, 0.4);
 }

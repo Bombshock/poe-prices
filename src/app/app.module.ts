@@ -26,6 +26,7 @@ import { StashContainerComponent } from './components/stash-container/stash-cont
 import { StashDetailsComponent } from './components/stash-details/stash-details.component';
 import { ItemFilterPipe } from './pipes/item-filter.pipe';
 import { ItemDetailsComponent } from './components/item-details/item-details.component';
+import { ItemPriceComponent } from './components/item-price/item-price.component';
 
 const appRoutes: Routes = [
   {
@@ -54,7 +55,8 @@ const appRoutes: Routes = [
     StashContainerComponent,
     StashDetailsComponent,
     ItemFilterPipe,
-    ItemDetailsComponent
+    ItemDetailsComponent,
+    ItemPriceComponent
   ],
   imports: [
     BrowserModule,

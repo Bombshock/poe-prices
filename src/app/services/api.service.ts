@@ -2,13 +2,15 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from './auth.service';
 import { StatGroup } from '../models/stat';
-import { ItemListing } from '../models/item';
+import { ItemListing, StaticItemDataGroup } from '../models/item';
 import { StaticGroup } from '../models/static';
 
 @Injectable( {
   providedIn: 'root'
 } )
 export class ApiService {
+
+  private cache: { [ key: string ]: Promise<any> } = {};
 
   constructor(
     private http: HttpClient,
@@ -26,31 +28,35 @@ export class ApiService {
   }
 
   public stats(): Promise<StatGroup[]> {
-    const stats = window.localStorage.getItem( 'stats' );
-    if ( stats ) {
-      return Promise.resolve( JSON.parse( stats ).result );
-    } else {
-      return this.http.get<{ result: StatGroup[] }>( `https://www.pathofexile.com/api/trade/data/stats` ).toPromise().then( result => {
-        window.localStorage.setItem( 'stats', JSON.stringify( result ) );
-        return result.result;
-      } )
-    }
+    return this.getCachedData( 'stats' );
+  }
+
+  public items(): Promise<StaticItemDataGroup[]> {
+    return this.getCachedData( 'items' );
   }
 
   public static(): Promise<StaticGroup[]> {
-    const staticData = window.localStorage.getItem( 'static' );
-    if ( staticData ) {
-      return Promise.resolve( JSON.parse( staticData ).result );
+    return this.getCachedData( 'static' );
+  }
+
+  public tradeItems( ids: string[], query: string ): Promise<ItemListing[]> {
+    return this.http.get<{ result: ItemListing[] }>( `https://www.pathofexile.com/api/trade/fetch/${ ids.join( ',' ) }?query=${ query }` ).toPromise().then( res => res.result );
+  }
+
+  private async getCachedData( key: 'static' | 'items' | 'stats' ) {
+    if ( this.cache[ key ] ) {
+      return this.cache[ key ];
+    }
+    const storageData = window.localStorage.getItem( key );
+    if ( storageData ) {
+      this.cache[ key ] = Promise.resolve( JSON.parse( storageData ).result );
     } else {
-      return this.http.get<{ result: StaticGroup[] }>( `https://www.pathofexile.com/api/trade/data/static` ).toPromise().then( result => {
-        window.localStorage.setItem( 'static', JSON.stringify( result ) );
+      this.cache[ key ] = this.http.get<{ result: any[] }>( `https://www.pathofexile.com/api/trade/data/${ key }` ).toPromise().then( result => {
+        window.localStorage.setItem( key, JSON.stringify( result ) );
         return result.result;
       } )
     }
-  }
-
-  public items( ids: string[], query: string ): Promise<ItemListing[]> {
-    return this.http.get<{ result: ItemListing[] }>( `https://www.pathofexile.com/api/trade/fetch/${ ids.join( ',' ) }?query=${ query }` ).toPromise().then( res => res.result );
+    return this.cache[ key ];
   }
 }
 

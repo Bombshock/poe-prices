@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { StashContainerComponent } from '../stash-container/stash-container.component';
 import { ComparatorService } from 'src/app/services/comparator.service';
 import { Item, ItemQueryResultMapped } from 'src/app/models/item';
-import { weights } from 'src/app/models/currencyWeight';
 import { ItemFilterPipe } from 'src/app/pipes/item-filter.pipe';
 import { ApiService } from 'src/app/services/api.service';
 import { StaticItem, StaticGroup } from 'src/app/models/static';
 import { MatDialog } from '@angular/material/dialog';
 import { ItemDetailsComponent } from '../item-details/item-details.component';
+import { PriceService } from 'src/app/services/price.service';
 
 @Component( {
   selector: 'app-stash-details',
@@ -32,28 +32,32 @@ export class StashDetailsComponent implements OnInit {
 
     private dialog: MatDialog,
     private api: ApiService,
-    private comp: ComparatorService
+    private comp: ComparatorService,
+    private price: PriceService
   ) { }
+
+  get items() {
+    return this.filter.transform( this.container.stashResult.items, this.textQuery )
+  }
 
   public async ngOnInit() {
     this.currency = ( await this.api.static() ).find( grp => grp.id === 'Currency' );
     this.currency.entries.forEach( entry => {
       this.currencyMap[ entry.id ] = entry;
     } );
-    console.log( await this.comp.getStatGroup( 'Explicit' ) )
   }
 
   public load() {
     this.queue = [];
-    const items = this.filter.transform( this.container.stashResult.items, this.textQuery );
+    const items = this.items;
     this.max = this.open = items.length;
     items.forEach( item => {
       this.queue.push( () => {
         return this.comp.search( item )
           .then( ( result: ItemQueryResultMapped ) => {
             item.result = result;
+            item.priceInChaos = this.price.calculate( item );
             this.open--;
-            this.sort();
             return wait( 500 );
           } )
       } )
@@ -65,23 +69,6 @@ export class StashDetailsComponent implements OnInit {
     this.dialog.open( ItemDetailsComponent, {
       data: { item }
     } );
-  }
-
-  public sort() {
-    this.container.stashResult.items = this.container.stashResult.items.sort( ( a: Item, b: Item ) => {
-      if ( a.result && !b.result ) {
-        return -1;
-      }
-      if ( b.result && !a.result ) {
-        return 1;
-      }
-      if ( !a.result && !b.result ) {
-        return a.x - b.x;
-      }
-      const bc = weights[ b.result.result[ 0 ].listing.price.currency ] * b.result.result[ 0 ].listing.price.amount;
-      const ac = weights[ a.result.result[ 0 ].listing.price.currency ] * a.result.result[ 0 ].listing.price.amount;
-      return bc - ac;
-    } )
   }
 
   private next() {

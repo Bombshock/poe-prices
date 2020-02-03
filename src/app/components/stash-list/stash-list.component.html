@@ -10,9 +10,12 @@
 
 <div fxLayout="column" *ngIf="container.stashResult" class="stash-list__list">
   <div *ngFor="let stash of container.stashResult.tabs" fxLayout="row">
-    <button fxFlex="1" mat-button mat-list-item (click)="navigate(stash)"
-      [class.active]="container.activeIndex == stash.i">
-      {{ stash.n }}
+    <button fxFlex="1" mat-button (click)="navigate(stash)" [class.active]="container.activeIndex == stash.i">
+      <div fxLayout="row">
+        <div class="stash-list__list__color-indicator"
+          [style.background]="'rgba(' + stash.colour.r + ', ' + stash.colour.g + ', ' + stash.colour.b + ', 1)'"></div>
+        {{ stash.n }}
+      </div>
     </button>
   </div>
 </div>

@@ -10,20 +10,29 @@ export type Item = {
     inventoryId: string;
     league: string;
     name: string;
-    requirements: { displayMode: number, name: string, values: [string, number]}[];
+    requirements: { displayMode: number, name: string, values: [ string, number ] }[];
     typeLine: string;
     verified: false;
     w: number;
     x: number;
     y: number;
     result?: ItemQueryResultMapped;
+    descrText?: string;
     stackSize: number;
     maxStackSize: number;
     sockets?: {
         attr: string;
         group: number;
         sColour: 'R' | 'G' | 'B'
-    }[]
+    }[];
+    properties?: {
+        displayMode: number;
+        name: string;
+        type: number;
+        values: [ string, number ][]
+    }[];
+    category: any;
+    priceInChaos?: number;
 }
 
 export type ItemListing = {
@@ -54,3 +63,19 @@ export type ItemQueryResultMapped = {
 }
 
 export type ItemModMap = { [ key: string ]: number };
+
+export type StaticItemDataGroup = {
+    label: string;
+    entries: StaticItemDataEntry[]
+}
+
+export type StaticItemDataEntry = {
+    type: string;
+    text: string;
+
+    disc?: string;
+    name?: string;
+    flags?: {
+        unique: boolean
+    }
+}

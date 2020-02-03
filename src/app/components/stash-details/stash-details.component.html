@@ -18,7 +18,7 @@
 
 <div fxFlex="1" style="overflow-y: auto;">
   <mat-list role="list">
-    <mat-list-item role="listitem" *ngFor="let item of container.stashResult.items | itemFilter:textQuery">
+    <mat-list-item role="listitem" *ngFor="let item of items">
       <div fxFlex="1" fxLayout="row">
         <span *ngIf="container.activeStash.type == 'PremiumStash' || container.activeStash.type == 'NormalStash'"
           class="stash-details__item-list__item__coords">
@@ -30,16 +30,14 @@
           </span>
           {{ item.typeLine }}
         </button>
-        <div class="stash-details__item-list__item__stacks">
+        <div class="stash-details__item-list__item__stacks" *ngIf="item.maxStackSize">
           {{ item.stackSize || '1' }}
-        </div>
-        <div class="stash-details__item-list__item__worth">
-          <span *ngIf="item.result" fxLayout="row">
-            {{ item.result.result[0].listing.price.amount }}
-            <img [src]="'https://www.pathofexile.com' + currencyMap[item.result.result[0].listing.price.currency].image"
-              [alt]="currencyMap[item.result.result[0].listing.price.currency].text">
+          <span class="stash-details__item-list__item__max-stack-size">
+            / {{ item.maxStackSize }}
           </span>
         </div>
+        <app-item-price [chaos]="item.priceInChaos" class="stash-details__item-list__item__worth">
+        </app-item-price>
       </div>
       <mat-divider></mat-divider>
     </mat-list-item>
