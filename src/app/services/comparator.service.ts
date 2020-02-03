@@ -24,6 +24,8 @@ export class ComparatorService {
       return this.executeFilter( item, this.buildSimpleFilter( item ) );
     } else {
       let result = await this.executeFilter( item, await this.buildItemFilter( item, true, true ) );
+      let id = result.id;
+
       if ( !result ) {
         result = await this.executeFilter( item, await this.buildItemFilter( item, true, true, false ) );
       }
@@ -39,7 +41,8 @@ export class ComparatorService {
       if ( !result ) {
         result = await this.executeFilter( item, await this.buildItemFilter( item, false, false, false ) );
       }
-      return result;
+
+      return { id, result: result.result, total: result.total };
     }
   }
 
