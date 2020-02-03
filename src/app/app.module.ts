@@ -46,7 +46,7 @@ const appRoutes: Routes = [
 ];
 
 
-@NgModule( {
+@NgModule({
   declarations: [
     AppComponent,
     AuthComponent,
@@ -81,9 +81,9 @@ const appRoutes: Routes = [
     )
   ],
   providers: [],
-  bootstrap: [ AppComponent ],
+  bootstrap: [AppComponent],
   entryComponents: [
     ItemDetailsComponent
   ]
-} )
+})
 export class AppModule { }
