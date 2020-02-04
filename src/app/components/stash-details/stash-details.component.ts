@@ -40,11 +40,21 @@ export class StashDetailsComponent implements OnInit {
     return this.filter.transform( this.container.stashResult.items, this.textQuery )
   }
 
+  get queueLength() {
+    return this.queue.length;
+  }
+
   public async ngOnInit() {
     this.currency = ( await this.api.static() ).find( grp => grp.id === 'Currency' );
     this.currency.entries.forEach( entry => {
       this.currencyMap[ entry.id ] = entry;
     } );
+  }
+
+  public stop() {
+    this.queue = [];
+    this.max = 0;
+    this.open = 0;
   }
 
   public load() {
