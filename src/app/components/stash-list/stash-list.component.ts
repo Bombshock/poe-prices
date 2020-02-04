@@ -26,5 +26,4 @@ export class StashListComponent implements OnInit {
   public navigate( stash: Stash ) {
     this.router.navigate( [ '/stashes' ], { queryParams: { index: stash.i } } );
   }
-
 }

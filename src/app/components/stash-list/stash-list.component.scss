@@ -17,11 +17,20 @@
   flex: 1 1 auto;
 }
 
-.stash-list__list button {
-  text-align: left;
+.stash-list__list {
+  overflow-y: auto;
 
-  &.active {
-    background-color: rgba(0, 0, 0, 0.12);
+  > * {
+    min-height: 36px;
+  }
+  
+  button {
+    text-align: left;
+    min-height: 36px;
+
+    &.active {
+      background-color: rgba(0, 0, 0, 0.12);
+    }
   }
 }
 

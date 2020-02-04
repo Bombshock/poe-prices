@@ -14,7 +14,9 @@
       <div fxLayout="row">
         <div class="stash-list__list__color-indicator"
           [style.background]="'rgba(' + stash.colour.r + ', ' + stash.colour.g + ', ' + stash.colour.b + ', 1)'"></div>
-        {{ stash.n }}
+        <div fxFlex="1">
+          {{ stash.n }}
+        </div>
       </div>
     </button>
   </div>
