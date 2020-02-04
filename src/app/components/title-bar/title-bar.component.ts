@@ -52,8 +52,6 @@ export class TitleBarComponent implements OnInit {
 
   @HostListener( 'window:keyup', [ '$event' ] )
   keyEvent( event: KeyboardEvent ) {
-    console.log( event );
-
     if ( event.key === 'F12' ) {
       this.openDevTools();
     }
@@ -66,5 +64,9 @@ export class TitleBarComponent implements OnInit {
   logout() {
     this.auth.logout();
     this.api.clearCache();
+  }
+
+  setLeague( league: string ) {
+    this.auth.league.next( league );
   }
 }

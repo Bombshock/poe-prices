@@ -2,6 +2,11 @@
   <button mat-menu-item (click)="logout()">Logout</button>
   <button mat-menu-item (click)="clearCache()">Clear Cache</button>
   <button mat-menu-item (click)="openDevTools()">Open DevTools</button>
+  <button mat-menu-item [matMenuTriggerFor]="leagueMenu" *ngIf="auth.leagues.length">League</button>
+</mat-menu>
+
+<mat-menu #leagueMenu="matMenu">
+  <button mat-menu-item (click)="setLeague(league)" *ngFor="let league of auth.leagues">{{ league }}</button>
 </mat-menu>
 
 <button mat-icon-button [matMenuTriggerFor]="appMenu" class="clear" *ngIf="auth.authorized">

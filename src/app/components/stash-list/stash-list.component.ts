@@ -14,10 +14,8 @@ export class StashListComponent implements OnInit {
   constructor(
     public container: StashContainerComponent,
 
-    private title: TitleService,
     private router: Router,
   ) {
-    this.title.suffix = 'stashes';
   }
 
   ngOnInit() {

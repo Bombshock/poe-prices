@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { ApiService, StashRequestResult, Stash } from 'src/app/services/api.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component( {
   selector: 'app-stash-container',
@@ -18,6 +19,7 @@ export class StashContainerComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private auth: AuthService,
     private api: ApiService
   ) {
     this.route.queryParams.subscribe( ( params: Params ) => {
@@ -31,6 +33,12 @@ export class StashContainerComponent implements OnInit {
         this.refresh();
       }
     } );
+    this.auth.league.subscribe( league => {
+      if ( league ) {
+        this.activeIndex = 0;
+        this.refresh();
+      }
+    } )
   }
 
   ngOnInit() {

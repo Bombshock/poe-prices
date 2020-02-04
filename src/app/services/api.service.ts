@@ -21,7 +21,7 @@ export class ApiService {
     return this.http.get(
       `https://www.pathofexile.com/character-window/get-stash-items` +
       `?accountName=${ this.auth.username }` +
-      `&realm=pc&league=Metamorph&tabs=1&tabIndex=${ index }&public=false`
+      `&realm=pc&league=${ this.auth.league.getValue() }&tabs=1&tabIndex=${ index }&public=false`
     ).toPromise().then( ( result: any ) => {
       return result;
     } );

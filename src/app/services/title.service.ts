@@ -6,18 +6,21 @@ import { AuthService } from './auth.service';
 } )
 export class TitleService {
 
-  public prefix = 'PoE';
+  public prefix = '';
+  public main = '';
   public suffix = '';
 
-  constructor(
-    private auth: AuthService
-  ) { }
+  constructor() { }
 
   get title(): string {
-    const out = [ this.prefix ];
+    const out = [];
 
-    if ( this.auth.authorized ) {
-      out.push( this.auth.username );
+    if ( this.prefix ) {
+      out.push( this.prefix );
+    }
+
+    if ( this.main ) {
+      out.push( this.main );
     }
 
     if ( this.suffix ) {

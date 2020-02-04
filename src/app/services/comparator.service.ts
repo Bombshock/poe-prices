@@ -71,8 +71,6 @@ export class ComparatorService {
     const itemIds = result.result.slice( 0, 9 );
     let filtered = [];
 
-    // console.log( result.id );
-
     if ( itemIds.length ) {
       const items = await this.api.tradeItems( itemIds, result.id );
       filtered = items.filter( i => !!i.listing.price );
@@ -178,8 +176,6 @@ export class ComparatorService {
         }
       } )
     }
-
-    // console.log( filters );
 
     body.query.stats.push( {
       type: 'and',

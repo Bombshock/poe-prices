@@ -9,9 +9,7 @@ export class CategorizeService {
 
   constructor(
     private api: ApiService
-  ) {
-    console.log( this );
-  }
+  ) { }
 
   public async categorizeItem( item: Item ) {
     let statics = await this.api.static();

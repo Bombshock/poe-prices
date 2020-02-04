@@ -3,7 +3,8 @@
     <label class="spacer stash-details__searchbar" fxLayout="row">
       <mat-icon>search</mat-icon>
       <input fxFlex="1" [(ngModel)]="textQuery">
-      <mat-icon (click)="textQuery = ''">close</mat-icon>
+      <mat-icon (click)="textQuery = ''" *ngIf="textQuery != ''" class="stash-details__searchbar__clear-input">close
+      </mat-icon>
     </label>
     <button mat-icon-button *ngIf="queueLength == 0">
       <mat-icon aria-label="load" (click)="load()">play_circle_filled</mat-icon>
@@ -19,7 +20,7 @@
   </mat-progress-bar>
 </div>
 
-<div fxFlex="1" style="overflow-y: auto;" *ngIf="container.activeStash">
+<div fxFlex="1" fxLayout="column" style="overflow-y: auto;" *ngIf="container.activeStash">
   <mat-list role="list">
     <mat-list-item role="listitem" *ngFor="let item of items">
       <div fxFlex="1" fxLayout="row">
@@ -45,6 +46,12 @@
       <mat-divider></mat-divider>
     </mat-list-item>
   </mat-list>
+
+  <div fxFlex="1"
+    *ngIf="items.length == 0 && (container.activeStash.type == 'MapStash' || container.activeStash.type == 'UniqueStash')"
+    class="center-box">
+    This stash type is currently not supported by PoE API :(
+  </div>
 </div>
 
 <div fxFlex="1" *ngIf="!container.activeStash" class="center-box">
