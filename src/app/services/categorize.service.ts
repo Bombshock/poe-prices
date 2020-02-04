@@ -9,7 +9,9 @@ export class CategorizeService {
 
   constructor(
     private api: ApiService
-  ) { }
+  ) {
+    console.log( this );
+  }
 
   public async categorizeItem( item: Item ) {
     let statics = await this.api.static();
@@ -33,9 +35,10 @@ export class CategorizeService {
 
     for ( let i = 0; i < statics.length; i++ ) {
       const staticGroup = statics[ i ];
+      const fuzzy = staticGroup.id.indexOf( 'Maps' ) === 0;
       for ( let j = 0; j < staticGroup.entries.length; j++ ) {
         const staticGroupEntry = staticGroup.entries[ j ];
-        if ( item.typeLine.indexOf( staticGroupEntry.text ) !== -1 ) {
+        if ( ( fuzzy && item.typeLine.indexOf( staticGroupEntry.text ) !== -1 ) || item.typeLine === staticGroupEntry.text ) {
           return {
             group: staticGroup.label,
             text: staticGroupEntry.text,
@@ -46,10 +49,6 @@ export class CategorizeService {
       }
     }
 
-    const itemName = item.name ? item.name + ' ' + item.typeLine : item.typeLine;
-
-    console.log( itemName );
-
     for ( let i = 0; i < items.length; i++ ) {
       const itemGroup = items[ i ];
       for ( let j = 0; j < itemGroup.entries.length; j++ ) {
@@ -58,7 +57,7 @@ export class CategorizeService {
           return {
             group: itemGroup.label,
             text: itemGroupEntry.text,
-            map: mapTier > 0,
+            map: false,
             src: 'items'
           };
         }
@@ -73,7 +72,7 @@ export class CategorizeService {
           return {
             group: itemGroup.label,
             text: itemGroupEntry.text,
-            map: mapTier > 0,
+            map: false,
             src: 'items-fuzzy'
           };
         }
