@@ -2,3 +2,6 @@
 tool to retrive market value of an Item.
 
 ![alt text](./img/screen-1.png "Logo Title Text 1")
+
+# Download
+see [releases section](https://github.com/Bombshock/poe-prices/releases)
