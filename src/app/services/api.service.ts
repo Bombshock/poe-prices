@@ -43,6 +43,13 @@ export class ApiService {
     return this.http.get<{ result: ItemListing[] }>( `https://www.pathofexile.com/api/trade/fetch/${ ids.join( ',' ) }?query=${ query }` ).toPromise().then( res => res.result );
   }
 
+  public clearCache() {
+    [ 'static', 'items', 'stats' ].forEach( key => {
+      window.localStorage.removeItem( key );
+    } );
+    this.cache = {};
+  }
+
   private async getCachedData( key: 'static' | 'items' | 'stats' ) {
     if ( this.cache[ key ] ) {
       return this.cache[ key ];

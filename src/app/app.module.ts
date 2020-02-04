@@ -17,6 +17,8 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
@@ -46,7 +48,7 @@ const appRoutes: Routes = [
 ];
 
 
-@NgModule({
+@NgModule( {
   declarations: [
     AppComponent,
     AuthComponent,
@@ -74,6 +76,8 @@ const appRoutes: Routes = [
     MatDividerModule,
     MatProgressBarModule,
     MatDialogModule,
+    MatMenuModule,
+    MatSnackBarModule,
 
     RouterModule.forRoot(
       appRoutes,
@@ -81,9 +85,9 @@ const appRoutes: Routes = [
     )
   ],
   providers: [],
-  bootstrap: [AppComponent],
+  bootstrap: [ AppComponent ],
   entryComponents: [
     ItemDetailsComponent
   ]
-})
+} )
 export class AppModule { }
