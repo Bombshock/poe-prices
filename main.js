@@ -15,7 +15,6 @@ async function createWindow() {
     mainWindow = new BrowserWindow( {
         ...bounds,
         frame: false,
-        show: false,
         webPreferences: {
             // preload: path.join( __dirname, 'preload.js' )
             webSecurity: false,
@@ -29,10 +28,10 @@ async function createWindow() {
 
     if ( isDev ) {
         mainWindow.loadURL( 'http://localhost:4200' );
-        mainWindow.webContents.openDevTools()
+        // mainWindow.webContents.openDevTools()
     } else {
         mainWindow.loadFile( path.join( __dirname, 'dist/poe-prices/index.html' ) )
-        mainWindow.webContents.openDevTools()
+        // mainWindow.webContents.openDevTools()
     }
 
     [ 'resize', 'move', 'close' ].forEach( event => {
@@ -47,10 +46,6 @@ async function createWindow() {
         // in an array if your app supports multi windows, this is the time
         // when you should delete the corresponding element.
         mainWindow = null
-    } )
-
-    mainWindow.on( 'ready-to-show', () => {
-        mainWindow.show();
     } )
 }
 
@@ -80,6 +75,7 @@ function getBounds() {
     if ( settings.has( `windowState` ) ) {
         return settings.get( `windowState` );
     }
+
     // Default
     return {
         x: undefined,

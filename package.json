@@ -7,8 +7,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "start": "electron . --dev",
-    "build": "electron-builder",
-    "release": "build"
+    "build": "electron-builder"
   },
   "main": "main.js",
   "private": true,
@@ -60,13 +59,14 @@
   },
   "build": {
     "appId": "de.bombshock.poe-prices",
+    "artifactName": "${productName}.${version}.${ext}",
     "asar": false,
     "directories": {
       "output": "dist-build"
     },
-    "win": {
-      "publish": [
-        "github"
+    "files": {
+      "filter": [
+        "!src"
       ]
     }
   }

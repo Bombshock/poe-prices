@@ -29,6 +29,7 @@ import { StashDetailsComponent } from './components/stash-details/stash-details.
 import { ItemFilterPipe } from './pipes/item-filter.pipe';
 import { ItemDetailsComponent } from './components/item-details/item-details.component';
 import { ItemPriceComponent } from './components/item-price/item-price.component';
+import { environment } from 'src/environments/environment';
 
 const appRoutes: Routes = [
   {
@@ -81,7 +82,10 @@ const appRoutes: Routes = [
 
     RouterModule.forRoot(
       appRoutes,
-      { enableTracing: false } // <-- debugging purposes only
+      { 
+        enableTracing: false,  // <-- debugging purposes only
+        useHash: environment.hash
+      }
     )
   ],
   providers: [],
