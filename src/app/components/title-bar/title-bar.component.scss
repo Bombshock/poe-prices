@@ -11,7 +11,7 @@
   padding: 0 16px;
 }
 
-button {
+:host > button {
   width: 45px !important;
   min-width: unset !important;
   height: 30px !important;
@@ -19,6 +19,10 @@ button {
   line-height: 30px !important;
   border-radius: 0;
   background-color: rgba(255, 255, 255, 0.1);
+
+  &.clear {
+    background-color: transparent;
+  }
 
   mat-icon {
     color: #fff;
