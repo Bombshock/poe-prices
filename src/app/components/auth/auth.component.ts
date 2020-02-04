@@ -22,7 +22,7 @@ export class AuthComponent implements OnInit {
   }
 
   ngOnInit() {
-    if ( this.session && this.username && !this.isLoading ) {
+    if ( this.session && this.username && !this.isLoading && this.auth.autoLogin ) {
       this.send();
     }
   }
