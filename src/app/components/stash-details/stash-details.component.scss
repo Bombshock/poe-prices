@@ -63,3 +63,10 @@
 .stash-details__item-list__item__max-stack-size {
   color: rgba(0, 0, 0, 0.4);
 }
+
+.center-box {
+  display: flex;
+  flex-grow: 1;
+  align-items: center;
+  justify-content: center;
+}
