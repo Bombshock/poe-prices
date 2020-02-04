@@ -34,17 +34,17 @@ export class StashContainerComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.refresh();
+    this.cache = {};
   }
 
   public async refresh() {
+    this.activeStash = null;
     this.isLoading = true;
     this.stashResult = await this.api.stash( this.activeIndex );
     this.isLoading = false;
 
     this.cache[ this.activeIndex ] = this.stashResult.items;
 
-    this.activeStash = null;
     this.stashResult.tabs.forEach( tab => {
       if ( tab.i === this.activeIndex ) {
         this.activeStash = tab;
