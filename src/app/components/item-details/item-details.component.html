@@ -1,6 +1,6 @@
 <div fxLayout="row">
   <div class="item-details__icon item-details__section" [class.loaded]="iconLoaded" fxLayout="column">
-    <img [src]="data.item.icon" #icon>
+    <img [src]="data.item.icon" *ngIf="data.item.icon" #icon>
     <mat-progress-spinner *ngIf="!iconLoaded" mode="indeterminate">
     </mat-progress-spinner>
     <button mat-raised-button (click)="scan()" color="primary" *ngIf="iconLoaded">scan</button>
@@ -27,15 +27,23 @@
         {{ mod }}
       </div>
     </div>
-    <div class="item-details__data__data-set center" *ngIf="data.item.result" fxLayout="row">
-      {{ data.item.result.result[0].listing.price.amount }}
-      <img height="32"
-        [src]="'https://www.pathofexile.com' + currencyMap[data.item.result.result[0].listing.price.currency].image"
-        *ngIf="currencyMap[data.item.result.result[0].listing.price.currency]">
-    </div>
   </div>
 
   <div class="item-details__section">
+
+    <div *ngIf="data.item.result">
+      <div *ngFor="let result of data.item.result.result" fxLayout="row">
+        <div class="item-details__listin__price">
+          {{ result.listing.price.amount }}
+          <img height="32" [src]="'https://www.pathofexile.com' + currencyMap[result.listing.price.currency].image"
+            *ngIf="currencyMap[result.listing.price.currency]">
+        </div>
+        <div>
+          {{ result.listing.account.name }}
+        </div>
+      </div>
+    </div>
+
     <div>
       <button mat-button (click)="openNarrow()" *ngIf="!isNarrowLoading">
         <mat-icon> link </mat-icon>

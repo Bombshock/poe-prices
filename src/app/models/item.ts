@@ -10,7 +10,7 @@ export type Item = {
     inventoryId: string;
     league: string;
     name: string;
-    requirements: { displayMode: number, name: string, values: [ string, number ] }[];
+    requirements: { displayMode: number, name: string, values: [string, number] }[];
     typeLine: string;
     verified: false;
     w: number;
@@ -29,7 +29,7 @@ export type Item = {
         displayMode: number;
         name: string;
         type: number;
-        values: [ string, number ][]
+        values: [string, number][]
     }[];
     category: any;
     priceInChaos?: number;
@@ -46,6 +46,15 @@ export type ItemListing = {
             type: string;
             amount: number;
             currency: string;
+        },
+        account: {
+            name: string,
+            lastCharacterName: string,
+            online: null | {
+                league: string,
+                status: 'afk' | 'online'
+            },
+            language: string
         }
     }
 }
@@ -62,7 +71,7 @@ export type ItemQueryResultMapped = {
     total: number;
 }
 
-export type ItemModMap = { [ key: string ]: number };
+export type ItemModMap = { [key: string]: number };
 
 export type StaticItemDataGroup = {
     label: string;
