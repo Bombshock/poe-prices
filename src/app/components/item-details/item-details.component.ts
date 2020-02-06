@@ -24,7 +24,7 @@ export class ItemDetailsComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<ItemDetailsComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { item: ComplexItemType & { result?: Item['result'] } },
+    @Inject(MAT_DIALOG_DATA) public data: { item: ComplexItemType & { result?: Item['result'], icon?: Item['icon'] } },
     private api: ApiService,
     private comp: ComparatorService
   ) { }
