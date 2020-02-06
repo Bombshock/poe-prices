@@ -1,0 +1,275 @@
+[
+    {
+        "id": "weapon",
+        "text": "Any Weapon",
+        "tags": []
+    },
+    {
+        "id": "weapon.one",
+        "text": "One-Handed Weapon",
+        "tags": []
+    },
+    {
+        "id": "weapon.onemelee",
+        "text": "One-Handed Melee Weapon",
+        "tags": []
+    },
+    {
+        "id": "weapon.twomelee",
+        "text": "Two-Handed Melee Weapon",
+        "tags": []
+    },
+    {
+        "id": "weapon.bow",
+        "text": "Bow",
+        "tags": []
+    },
+    {
+        "id": "weapon.claw",
+        "text": "Claw",
+        "tags": [],
+        "not": [
+            "talisman"
+        ]
+    },
+    {
+        "id": "weapon.dagger",
+        "text": "Any Dagger",
+        "tags": []
+    },
+    {
+        "id": "weapon.runedagger",
+        "text": "Rune Dagger",
+        "tags": []
+    },
+    {
+        "id": "weapon.oneaxe",
+        "text": "One-Handed Axe",
+        "tags": []
+    },
+    {
+        "id": "weapon.onemace",
+        "text": "One-Handed Mace",
+        "tags": []
+    },
+    {
+        "id": "weapon.onesword",
+        "text": "One-Handed Sword",
+        "tags": []
+    },
+    {
+        "id": "weapon.sceptre",
+        "text": "Sceptre",
+        "tags": []
+    },
+    {
+        "id": "weapon.staff",
+        "text": "Any Staff",
+        "tags": []
+    },
+    {
+        "id": "weapon.warstaff",
+        "text": "Warstaff",
+        "tags": []
+    },
+    {
+        "id": "weapon.twoaxe",
+        "text": "Two-Handed Axe",
+        "tags": []
+    },
+    {
+        "id": "weapon.twomace",
+        "text": "Two-Handed Mace",
+        "tags": []
+    },
+    {
+        "id": "weapon.twosword",
+        "text": "Two-Handed Sword",
+        "tags": []
+    },
+    {
+        "id": "weapon.wand",
+        "text": "Wand",
+        "tags": []
+    },
+    {
+        "id": "weapon.rod",
+        "text": "Fishing Rod",
+        "tags": []
+    },
+    {
+        "id": "armour",
+        "text": "Any Armour",
+        "tags": []
+    },
+    {
+        "id": "armour.chest",
+        "text": "Body Armour",
+        "tags": [
+            "golden mantle",
+            "shabby jerkin",
+            "glorious leather",
+            "coronal leather"
+        ]
+    },
+    {
+        "id": "armour.boots",
+        "text": "Boots",
+        "tags": []
+    },
+    {
+        "id": "armour.gloves",
+        "text": "Gloves",
+        "tags": []
+    },
+    {
+        "id": "armour.helmet",
+        "text": "Helmet",
+        "tags": []
+    },
+    {
+        "id": "armour.shield",
+        "text": "Shield",
+        "tags": []
+    },
+    {
+        "id": "armour.quiver",
+        "text": "Quiver",
+        "tags": []
+    },
+    {
+        "id": "accessory",
+        "text": "Any Accessory",
+        "tags": []
+    },
+    {
+        "id": "accessory.amulet",
+        "text": "Amulet",
+        "tags": [
+            "talisman"
+        ]
+    },
+    {
+        "id": "accessory.belt",
+        "text": "Belt",
+        "tags": [
+            "stygian vise",
+            "golden obi",
+            "rustic sash"
+        ]
+    },
+    {
+        "id": "accessory.ring",
+        "text": "Ring",
+        "tags": [
+            "golden hoop"
+        ],
+        "not": [
+            "ringmail"
+        ]
+    },
+    {
+        "id": "gem",
+        "text": "Any Gem",
+        "tags": []
+    },
+    {
+        "id": "gem.activegem",
+        "text": "Skill Gem",
+        "tags": []
+    },
+    {
+        "id": "gem.supportgem",
+        "text": "Support Gem",
+        "tags": []
+    },
+    {
+        "id": "gem.supportgemplus",
+        "text": "Awakened Support Gem",
+        "tags": []
+    },
+    {
+        "id": "jewel",
+        "text": "Any Jewel",
+        "tags": []
+    },
+    {
+        "id": "jewel.abyss",
+        "text": "Abyss Jewel",
+        "tags": []
+    },
+    {
+        "id": "flask",
+        "text": "Flask",
+        "tags": []
+    },
+    {
+        "id": "map",
+        "text": "Map",
+        "tags": []
+    },
+    {
+        "id": "map.fragment",
+        "text": "Map Fragment",
+        "tags": []
+    },
+    {
+        "id": "map.scarab",
+        "text": "Scarab",
+        "tags": []
+    },
+    {
+        "id": "watchstone",
+        "text": "Watchstone",
+        "tags": []
+    },
+    {
+        "id": "leaguestone",
+        "text": "Leaguestone",
+        "tags": []
+    },
+    {
+        "id": "prophecy",
+        "text": "Prophecy",
+        "tags": []
+    },
+    {
+        "id": "card",
+        "text": "Card",
+        "tags": []
+    },
+    {
+        "id": "monster.beast",
+        "text": "Captured Beast",
+        "tags": []
+    },
+    {
+        "id": "monster.sample",
+        "text": "Metamorph Sample",
+        "tags": []
+    },
+    {
+        "id": "currency",
+        "text": "Any Currency",
+        "tags": []
+    },
+    {
+        "id": "currency.piece",
+        "text": "Unique Fragment",
+        "tags": []
+    },
+    {
+        "id": "currency.resonator",
+        "text": "Resonator",
+        "tags": []
+    },
+    {
+        "id": "currency.fossil",
+        "text": "Fossil",
+        "tags": []
+    },
+    {
+        "id": "currency.incubator",
+        "text": "Incubator"
+    }
+]
