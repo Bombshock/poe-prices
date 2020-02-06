@@ -3,7 +3,7 @@ import { ApiService } from './api.service';
 import { Item, ItemQueryResult, ItemQueryResultMapped } from '../models/item';
 import { HttpClient } from '@angular/common/http';
 import { StatGroup } from '../models/stat';
-import { CategorizeService } from './categorize.service';
+import { CategorizeService, Category } from './categorize.service';
 import { query } from '@angular/core/src/render3/query';
 
 @Injectable( {
@@ -22,21 +22,22 @@ export class ComparatorService {
     return stats.find( grp => grp.label === groupName );
   }
 
-  public async search( item: Item ): Promise<ItemQueryResultMapped> {
+  public async search( item: Item, config?: ComperatorConfig ): Promise<ItemQueryResultMapped> {
 
-    const cat = await this.cat.categorizeItem( item );
+    const category = await this.cat.categorizeItem( item );
+    const defaultConfig = { category, min: true, minFactor: 0.99, ...config };
 
-    item.category = cat;
+    item.category = category;
 
-    console.log( item, cat );
+    console.log( item, category );
 
     if ( item.frameType > 3 ) {
-      return this.executeFilter( item, await this.buildSimpleFilter( item, cat ) );
+      return this.executeFilter( item, await this.buildSimpleFilter( item, category ) );
     } else {
       const chain = [
-        async () => this.executeFilter( item, await this.buildItemFilter( item, cat, true, true ) ),
-        async () => this.executeFilter( item, await this.buildItemFilter( item, cat, true, false ) ),
-        async () => this.executeFilter( item, await this.buildItemFilter( item, cat, false, false ) ),
+        async () => this.executeFilter( item, await this.buildItemFilter( item, { ...defaultConfig, explicit: true, implicit: true } ) ),
+        async () => this.executeFilter( item, await this.buildItemFilter( item, { ...defaultConfig, explicit: true, implicit: false } ) ),
+        async () => this.executeFilter( item, await this.buildItemFilter( item, { ...defaultConfig, explicit: false, implicit: false } ) ),
       ];
 
       let result;
@@ -83,7 +84,9 @@ export class ComparatorService {
     };
   }
 
-  private async buildItemFilter( item: Item, cat, explicit = true, implicit = true ) {
+  private async buildItemFilter( item: Item, options?: ComperatorConfig ) {
+    options = options || {};
+    const cat = options.category || await this.cat.categorizeItem( item );
     const body = await this.buildSimpleFilter( item, cat );
     const pseudoStats = await this.getStatGroup( 'Pseudo' );
     const explicitStats = await this.getStatGroup( 'Explicit' );
@@ -95,10 +98,7 @@ export class ComparatorService {
     const explicits = [];
     const implicits = [];
 
-    const factorDown = .99;
-    const factorUp = 1.25;
-
-    if ( item.explicitMods && item.explicitMods.length && explicit ) {
+    if ( item.explicitMods && item.explicitMods.length && options.explicit ) {
       item.explicitMods.forEach( mod => {
         const normalized = this.normalizeMod( mod );
         const pseudoEntry = this.findModInList( normalized.text, pseudoStats );
@@ -111,7 +111,7 @@ export class ComparatorService {
       } )
     }
 
-    if ( item.implicitMods && item.implicitMods.length && implicit ) {
+    if ( item.implicitMods && item.implicitMods.length && options.implicit ) {
       item.implicitMods.forEach( mod => {
         const normalized = this.normalizeMod( mod );
         const pseudoEntry = this.findModInList( normalized.text, pseudoStats );
@@ -133,46 +133,57 @@ export class ComparatorService {
       } )
       .forEach( item => {
         if ( item && item.value > 0 ) {
-          filters.push( {
+          const filter: any = {
             id: item.id,
-            value: {
-              min: item.value * factorDown,
-              max: item.value * factorUp
-            },
+            value: {},
             disabled: false
-          } )
+          }
+          if ( options.min ) {
+            filter.value.min = item.value * ( options.minFactor || 1 );
+          }
+          if ( options.max ) {
+            filter.value.min = item.value * ( options.maxFactor || 1 );
+          }
+          filters.push( filter );
         }
       } );
 
-    if ( explicit ) {
+    if ( options.explicit ) {
       explicits.forEach( item => {
-        const filter = this.findModInList( item.text, explicitStats );
-        if ( filter ) {
-          filters.push( {
-            id: filter.id,
-            value: {
-              min: item.value * factorDown,
-              max: item.value * factorUp
-            },
+        const mod = this.findModInList( item.text, explicitStats );
+        if ( mod ) {
+          const filter: any = {
+            id: mod.id,
+            value: {},
             disabled: false
-          } )
+          }
+          if ( options.min ) {
+            filter.value.min = item.value * ( options.minFactor || 1 );
+          }
+          if ( options.max ) {
+            filter.value.min = item.value * ( options.maxFactor || 1 );
+          }
+          filters.push( filter );
         }
       } )
-
     }
 
-    if ( implicit ) {
+    if ( options.implicit ) {
       implicits.forEach( item => {
-        const filter = this.findModInList( item.text, implicitStats );
-        if ( filter ) {
-          filters.push( {
-            id: filter.id,
-            value: {
-              min: item.value * factorDown,
-              max: item.value * factorUp
-            },
+        const mod = this.findModInList( item.text, implicitStats );
+        if ( mod ) {
+          const filter: any = {
+            id: mod.id,
+            value: {},
             disabled: false
-          } )
+          }
+          if ( options.min ) {
+            filter.value.min = item.value * ( options.minFactor || 1 );
+          }
+          if ( options.max ) {
+            filter.value.min = item.value * ( options.maxFactor || 1 );
+          }
+          filters.push( filter );
         }
       } )
     }
@@ -290,4 +301,14 @@ export class ComparatorService {
     return body;
   }
 
+}
+
+export type ComperatorConfig = {
+  category?: Category,
+  explicit?: boolean,
+  implicit?: boolean,
+  min?: boolean,
+  minFactor?: number,
+  max?: boolean,
+  maxFactor?: number
 }

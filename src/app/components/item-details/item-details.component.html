@@ -1,12 +1,12 @@
 <div fxLayout="row">
-  <div class="item-details__icon" [class.loaded]="iconLoaded" fxLayout="column">
+  <div class="item-details__icon item-details__section" [class.loaded]="iconLoaded" fxLayout="column">
     <img [src]="data.item.icon" #icon>
     <mat-progress-spinner *ngIf="!iconLoaded" mode="indeterminate">
     </mat-progress-spinner>
     <button mat-raised-button (click)="scan()" color="primary" *ngIf="iconLoaded">scan</button>
   </div>
 
-  <div class="item-details__data" fxLayout="column">
+  <div class="item-details__data item-details__section" fxLayout="column">
     <div class="item-details__data__data-set center">
       <div>
         {{ data.item.name }}
@@ -33,13 +33,24 @@
         [src]="'https://www.pathofexile.com' + currencyMap[data.item.result.result[0].listing.price.currency].image"
         *ngIf="currencyMap[data.item.result.result[0].listing.price.currency]">
     </div>
-    <div class="item-details__data__data-set center" *ngIf="data.item.result">
-      <button mat-button (click)="openRefSearch(data.item.result.id)">
-        <mat-icon>
-          link
-        </mat-icon>
-        {{ data.item.result.id }}
+  </div>
+
+  <div class="item-details__section">
+    <div>
+      <button mat-button (click)="openNarrow()" *ngIf="!isNarrowLoading">
+        <mat-icon> link </mat-icon>
+        Narrow search
       </button>
+      <mat-progress-spinner *ngIf="isNarrowLoading" mode="indeterminate" diameter="20">
+      </mat-progress-spinner>
+    </div>
+    <div>
+      <button mat-button (click)="openNoMinMax()" *ngIf="!isNoMinMaxLoading">
+        <mat-icon> link </mat-icon>
+        No min or max search
+      </button>
+      <mat-progress-spinner *ngIf="isNoMinMaxLoading" mode="indeterminate" diameter="20">
+      </mat-progress-spinner>
     </div>
   </div>
 </div>

@@ -15,6 +15,10 @@ const { shell } = window[ 'require' ]( 'electron' )
 export class ItemDetailsComponent implements OnInit {
 
   public iconLoaded = false;
+  public isScanning = false;
+
+  public isNarrowLoading = false;
+  public isNoMinMaxLoading = false;
 
   @ViewChild( 'icon' ) public icon: ElementRef;
   public currencyMap: { [ key: string ]: StaticItem } = {};
@@ -44,17 +48,29 @@ export class ItemDetailsComponent implements OnInit {
     } );
   }
 
-  openRefSearch( id: string ) {
+  async openNarrow() {
+    this.isNarrowLoading = true;
+    const result = await this.comp.search( this.data.item );
+    this.isNarrowLoading = false;
+    this.openScan( result.id );
+  }
+
+  async openNoMinMax() {
+    this.isNoMinMaxLoading = true;
+    const result = await this.comp.search( this.data.item, { min: false, max: false, explicit: true, implicit: true } );
+    this.isNoMinMaxLoading = false;
+    this.openScan( result.id );
+  }
+
+  openScan( id: string ) {
     shell.openExternal( `https://pathofexile.com/trade/search/${ this.data.item.league }/${ id }` )
   }
 
-  scan() {
-    this.iconLoaded = false;
-    this.comp.search( this.data.item )
-      .then( ( result: ItemQueryResultMapped ) => {
-        this.data.item.result = result;
-        this.iconLoaded = true;
-      } );
+  async scan() {
+    this.isScanning = false;
+    const result = await this.comp.search( this.data.item )
+    this.data.item.result = result;
+    this.isScanning = true;
   }
 
 }
