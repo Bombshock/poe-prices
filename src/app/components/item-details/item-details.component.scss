@@ -47,3 +47,11 @@
     justify-content: center;
   }
 }
+
+.item-details__listin__price {
+  width: 80px;
+  justify-content: flex-end;
+  align-items: center;
+  display: flex;
+  margin-right: 8px;
+}
