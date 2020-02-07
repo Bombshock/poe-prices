@@ -36,7 +36,7 @@ export class StashDetailsComponent implements OnInit {
     private price: PriceService
   ) { }
 
-  get items() {
+  get items(): Item[] {
     return this.filter.transform( this.container.stashResult.items, this.textQuery )
   }
 
@@ -61,12 +61,14 @@ export class StashDetailsComponent implements OnInit {
     this.queue = [];
     const items = this.items;
     this.max = this.open = items.length;
+    this.container.activeStash.priceMap = {};
     items.forEach( item => {
       this.queue.push( () => {
         return this.comp.search( item )
           .then( ( result: ItemQueryResultMapped ) => {
             item.result = result;
             item.priceInChaos = this.price.calculate( item );
+            this.container.activeStash.priceMap[ item.id ] = item.priceInChaos;
             this.open--;
             return wait( 500 );
           } )
@@ -82,7 +84,7 @@ export class StashDetailsComponent implements OnInit {
   }
 
   private next() {
-    if ( this.queue.length ) {
+    if( this.queue.length ) {
       this.queue.shift()().then( () => wait( 200 ) ).then( () => this.next() )
     }
   }

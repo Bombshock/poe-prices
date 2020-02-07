@@ -22,23 +22,33 @@ export class StashContainerComponent implements OnInit {
     private auth: AuthService,
     private api: ApiService
   ) {
+    this.setIndex( window.localStorage.getItem( 'activeIndex' ) );
     this.route.queryParams.subscribe( ( params: Params ) => {
-      this.activeIndex = parseInt( params.index );
-      if ( isNaN( this.activeIndex ) ) {
-        this.activeIndex = 0;
-      }
-      if ( this.cache[ this.activeIndex ] ) {
-        this.stashResult.items = this.cache[ this.activeIndex ];
-      } else {
-        this.refresh();
-      }
+      setTimeout( () => {
+        if( params.index ) {
+          this.setIndex( params.index );
+        }
+        if( this.cache[ this.activeIndex ] ) {
+          this.stashResult.items = this.cache[ this.activeIndex ];
+        } else {
+          this.refresh();
+        }
+      } )
     } );
     this.auth.league.subscribe( league => {
-      if ( league ) {
-        this.activeIndex = 0;
+      if( league ) {
+        this.setIndex( 0 );
         this.refresh();
       }
     } )
+  }
+
+  setIndex( index: any ) {
+    this.activeIndex = parseInt( index );
+    if( isNaN( this.activeIndex ) ) {
+      this.activeIndex = 0;
+    }
+    window.localStorage.setItem( 'activeIndex', `${ this.activeIndex }` );
   }
 
   ngOnInit() {
@@ -54,7 +64,7 @@ export class StashContainerComponent implements OnInit {
     this.cache[ this.activeIndex ] = this.stashResult.items;
 
     this.stashResult.tabs.forEach( tab => {
-      if ( tab.i === this.activeIndex ) {
+      if( tab.i === this.activeIndex ) {
         this.activeStash = tab;
       }
     } )

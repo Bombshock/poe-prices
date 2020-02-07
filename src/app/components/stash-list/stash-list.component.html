@@ -3,26 +3,55 @@
     <span>Stashes</span>
     <span class="spacer"></span>
     <button mat-icon-button>
-      <mat-icon aria-label="refresh" (click)="container.refresh()">refresh</mat-icon>
+      <mat-icon
+        aria-label="refresh"
+        (click)="container.refresh()"
+      >refresh</mat-icon>
     </button>
   </mat-toolbar-row>
 </mat-toolbar>
 
-<div fxLayout="column" *ngIf="container.stashResult" class="stash-list__list">
-  <div *ngFor="let stash of container.stashResult.tabs" fxLayout="row">
-    <button fxFlex="1" mat-button (click)="navigate(stash)" [class.active]="container.activeIndex == stash.i">
-      <div fxLayout="row" [class]="'stash-list__list__item ' + stash.type">
-        <div class="stash-list__list__color-indicator"
-          [style.background]="'rgba(' + stash.colour.r + ', ' + stash.colour.g + ', ' + stash.colour.b + ', 1)'"></div>
+<div
+  fxLayout="column"
+  *ngIf="container.stashResult"
+  class="stash-list__list"
+>
+  <div
+    *ngFor="let stash of container.stashResult.tabs"
+    fxLayout="row"
+  >
+    <button
+      fxFlex="1"
+      mat-button
+      (click)="navigate(stash)"
+      [class.active]="container.activeIndex == stash.i"
+    >
+      <div
+        fxLayout="row"
+        [class]="'stash-list__list__item ' + stash.type"
+      >
+        <div
+          class="stash-list__list__color-indicator"
+          [style.background]="'rgba(' + stash.colour.r + ', ' + stash.colour.g + ', ' + stash.colour.b + ', 1)'"
+        ></div>
         <div fxFlex="1">
           {{ stash.n }}
+        </div>
+        <div
+          *ngIf="hasPriceMap(stash)"
+          class="stash-list__list__item__price"
+        >
+          {{ getPrice(stash) }}c
         </div>
       </div>
     </button>
   </div>
 </div>
 
-<div class="center-box" *ngIf="!container.stashResult">
+<div
+  class="center-box"
+  *ngIf="!container.stashResult"
+>
   <mat-progress-spinner mode="indeterminate">
   </mat-progress-spinner>
 </div>

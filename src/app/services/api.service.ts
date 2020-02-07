@@ -51,11 +51,11 @@ export class ApiService {
   }
 
   private async getCachedData( key: 'static' | 'items' | 'stats' ) {
-    if ( this.cache[ key ] ) {
+    if( this.cache[ key ] ) {
       return this.cache[ key ];
     }
     const storageData = window.localStorage.getItem( key );
-    if ( storageData ) {
+    if( storageData ) {
       this.cache[ key ] = Promise.resolve( JSON.parse( storageData ).result );
     } else {
       this.cache[ key ] = this.http.get<{ result: any[] }>( `https://www.pathofexile.com/api/trade/data/${ key }` ).toPromise().then( result => {
@@ -76,7 +76,8 @@ export type Stash = {
   colour: { r: number, g: number, b: number };
   srcL: string;
   srcC: string;
-  srcR: string
+  srcR: string;
+  priceMap?: { [ key: string ]: number };
 };
 
 export type StashType = 'NormalStash' | 'PremiumStash' | 'EssenceStash' | 'CurrencyStash' | 'MapStash' | 'DivinationCardStash';

@@ -21,6 +21,26 @@ export class StashListComponent implements OnInit {
   ngOnInit() {
   }
 
+  public hasPriceMap( stash: Stash ) {
+    const storageKey = `priceMap_${ stash.id }`;
+    return !!stash.priceMap || !!window.localStorage.getItem( storageKey );
+  }
+
+  public getPrice( stash: Stash ) {
+    let price = 0;
+    const storageKey = `priceMap_${ stash.id }`;
+    if( !stash.priceMap ) {
+      try {
+        stash.priceMap = JSON.parse( window.localStorage.getItem( storageKey ) );
+      } catch( _e ) { }
+    }
+    if( stash.priceMap ) {
+      price = Object.values( stash.priceMap ).reduce( ( cur, next ) => cur + next, price );
+      window.localStorage.setItem( storageKey, JSON.stringify( stash.priceMap ) );
+    }
+    return Math.round( price );
+  }
+
   public navigate( stash: Stash ) {
     this.router.navigate( [ '/stashes' ], { queryParams: { index: stash.i } } );
   }
