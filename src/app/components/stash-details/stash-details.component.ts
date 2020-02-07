@@ -60,15 +60,16 @@ export class StashDetailsComponent implements OnInit {
   public load() {
     this.queue = [];
     const items = this.items;
+    const activeStash = this.container.activeStash;
     this.max = this.open = items.length;
-    this.container.activeStash.priceMap = {};
+    activeStash.priceMap = {};
     items.forEach( item => {
       this.queue.push( () => {
         return this.comp.search( item )
           .then( ( result: ItemQueryResultMapped ) => {
             item.result = result;
             item.priceInChaos = this.price.calculate( item );
-            this.container.activeStash.priceMap[ item.id ] = item.priceInChaos;
+            activeStash.priceMap[ item.id ] = item.priceInChaos;
             this.open--;
             return wait( 500 );
           } )

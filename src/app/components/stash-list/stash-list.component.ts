@@ -35,7 +35,12 @@ export class StashListComponent implements OnInit {
       } catch( _e ) { }
     }
     if( stash.priceMap ) {
-      price = Object.values( stash.priceMap ).reduce( ( cur, next ) => cur + next, price );
+      price = Object.values( stash.priceMap ).reduce( ( prev, cur ) => {
+        if( isNaN( cur ) || typeof cur !== 'number' ) {
+          cur = 0;
+        }
+        return cur + prev;
+      }, price );
       window.localStorage.setItem( storageKey, JSON.stringify( stash.priceMap ) );
     }
     return Math.round( price );
