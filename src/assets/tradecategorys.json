@@ -106,16 +106,37 @@
         "id": "armour.chest",
         "text": "Body Armour",
         "tags": [
-            "golden mantle",
-            "shabby jerkin",
-            "glorious leather",
-            "coronal leather"
+            "mantle",
+            "jerkin",
+            "leather",
+            "garb",
+            "tunic",
+            "vest",
+            "raiment",
+            "armour",
+            "jacket",
+            "coat",
+            "robe",
+            "regalia",
+            "silks",
+            "silken wrap",
+            "plate",
+            "scale",
+            "brigandine",
+            "lamellar",
+            "ringmail",
+            "chain",
+            "hauberk",
+            "caligae"
         ]
     },
     {
         "id": "armour.boots",
         "text": "Boots",
-        "tags": []
+        "tags": [
+            "shoes",
+            "slippers"
+        ]
     },
     {
         "id": "armour.gloves",
@@ -146,7 +167,10 @@
         "id": "accessory.amulet",
         "text": "Amulet",
         "tags": [
-            "talisman"
+            "talisman",
+            "hexclaw talisman",
+            "wereclaw talisman",
+            "ashscale talisman"
         ]
     },
     {
