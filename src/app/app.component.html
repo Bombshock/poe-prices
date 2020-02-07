@@ -1,9 +1,19 @@
-<div fxFlex="1" fxLayout="column">
+<div
+    fxFlex="1"
+    fxLayout="column"
+>
     <app-title-bar></app-title-bar>
     <app-auth *ngIf="!auth.authorized"></app-auth>
-    <div fxFlex="1" fxFill="1" *ngIf="auth.authorized">
+    <div
+        fxFlex="1"
+        fxFill="1"
+        *ngIf="auth.authorized"
+    >
         <mat-sidenav-container fxFill>
-            <mat-sidenav mode="side" [opened]="false">Sidenav content</mat-sidenav>
+            <mat-sidenav
+                mode="side"
+                [opened]="false"
+            >Sidenav content</mat-sidenav>
             <mat-sidenav-content fxLayout="column">
                 <router-outlet></router-outlet>
             </mat-sidenav-content>
