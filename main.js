@@ -14,11 +14,11 @@ console.log( __dirname );
 let mainWindow, overlay;
 
 ipcMain.on( 'show-overley', ( _event, template, dimensions ) => {
-    fs.writeFileSync( overlayPath, template );
-    if( !overlay ) {
-        createOverlay( dimensions )
-    }
-    overlay.loadFile( overlayPath )
+    // fs.writeFileSync( overlayPath, template );
+    // if( !overlay ) {
+    //     createOverlay( dimensions )
+    // }
+    // overlay.loadFile( overlayPath )
 } )
 
 function createOverlay( dimensions ) {
