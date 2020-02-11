@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
 const electron = window[ 'require' ]( 'electron' );
-const { clipboard, app, screen } = electron.remote
+const { clipboard } = electron.remote
 
 @Injectable( {
   providedIn: 'root'

@@ -1,14 +1,18 @@
 {
   "name": "poe-prices",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "scripts": {
     "ng": "ng",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "start": "electron . --dev",
-    "build": "electron-builder"
+    "build": "build-web && build-exe",
+    "build-web": "ng build --prod",
+    "build-exe": "cross-env CSC_LINK=/projekte/poe-prices/build/mycert.pfx electron-builder"
   },
+  "author": "Bombshock",
+  "description": "App to determine the value of an item in PoE",
   "main": "main.js",
   "private": true,
   "repository": {
@@ -39,8 +43,10 @@
     "@types/jasmine": "~3.5.3",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^12.11.1",
+    "archiver": "^3.1.1",
     "codelyzer": "^5.1.2",
     "core-js": "^3.6.4",
+    "cross-env": "^7.0.0",
     "electron": "^8.0.0",
     "electron-builder": "^22.3.2",
     "jasmine-core": "~3.5.0",

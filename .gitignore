@@ -1,7 +1,10 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
+/build
 /dist
 /dist-build
+/overlay.html
+/release
 
 # compiled output
 /dist

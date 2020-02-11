@@ -1,12 +1,31 @@
 <div fxLayout="row">
-  <div class="item-details__icon item-details__section" [class.loaded]="iconLoaded" fxLayout="column">
-    <img [src]="data.item.icon" *ngIf="data.item.icon" #icon>
-    <mat-progress-spinner *ngIf="!iconLoaded" mode="indeterminate">
+  <div
+    class="item-details__icon item-details__section hide-for-overlay"
+    [class.loaded]="iconLoaded"
+    fxLayout="column"
+  >
+    <img
+      [src]="data.item.icon"
+      *ngIf="data.item.icon"
+      #icon
+    >
+    <mat-progress-spinner
+      *ngIf="!iconLoaded"
+      mode="indeterminate"
+    >
     </mat-progress-spinner>
-    <button mat-raised-button (click)="scan()" color="primary" *ngIf="iconLoaded">scan</button>
+    <button
+      mat-raised-button
+      (click)="scan()"
+      color="primary"
+      *ngIf="iconLoaded"
+    >scan</button>
   </div>
 
-  <div class="item-details__data item-details__section" fxLayout="column">
+  <div
+    class="item-details__data item-details__section"
+    fxLayout="column"
+  >
     <div class="item-details__data__data-set center">
       <div>
         {{ data.item.name }}
@@ -15,13 +34,19 @@
         {{ data.item.typeLine }}
       </div>
     </div>
-    <div class="item-details__data__data-set center" *ngIf="data.item.implicitMods && data.item.implicitMods.length">
+    <div
+      class="item-details__data__data-set center"
+      *ngIf="data.item.implicitMods && data.item.implicitMods.length"
+    >
       <div>Implicit</div>
       <div *ngFor="let mod of data.item.implicitMods">
         {{ mod }}
       </div>
     </div>
-    <div class="item-details__data__data-set center" *ngIf="data.item.explicitMods && data.item.explicitMods.length">
+    <div
+      class="item-details__data__data-set center"
+      *ngIf="data.item.explicitMods && data.item.explicitMods.length"
+    >
       <div>Explicit</div>
       <div *ngFor="let mod of data.item.explicitMods">
         {{ mod }}
@@ -32,11 +57,17 @@
   <div class="item-details__section">
 
     <div *ngIf="data.item.result">
-      <div *ngFor="let result of data.item.result.result" fxLayout="row">
+      <div
+        *ngFor="let result of data.item.result.result"
+        fxLayout="row"
+      >
         <div class="item-details__listin__price">
           {{ result.listing.price.amount }}
-          <img height="32" [src]="'https://www.pathofexile.com' + currencyMap[result.listing.price.currency].image"
-            *ngIf="currencyMap[result.listing.price.currency]">
+          <img
+            height="32"
+            [src]="'https://www.pathofexile.com' + currencyMap[result.listing.price.currency].image"
+            *ngIf="currencyMap[result.listing.price.currency]"
+          >
         </div>
         <div>
           {{ result.listing.account.name }}
@@ -44,20 +75,36 @@
       </div>
     </div>
 
-    <div>
-      <button mat-button (click)="openNarrow()" *ngIf="!isNarrowLoading">
+    <div class="hide-for-overlay">
+      <button
+        mat-button
+        (click)="openNarrow()"
+        *ngIf="!isNarrowLoading"
+      >
         <mat-icon> link </mat-icon>
         Narrow search
       </button>
-      <mat-progress-spinner *ngIf="isNarrowLoading" mode="indeterminate" diameter="20">
+      <mat-progress-spinner
+        *ngIf="isNarrowLoading"
+        mode="indeterminate"
+        diameter="20"
+      >
       </mat-progress-spinner>
     </div>
-    <div>
-      <button mat-button (click)="openNoMinMax()" *ngIf="!isNoMinMaxLoading">
+    <div class="hide-for-overlay">
+      <button
+        mat-button
+        (click)="openNoMinMax()"
+        *ngIf="!isNoMinMaxLoading"
+      >
         <mat-icon> link </mat-icon>
         No min or max search
       </button>
-      <mat-progress-spinner *ngIf="isNoMinMaxLoading" mode="indeterminate" diameter="20">
+      <mat-progress-spinner
+        *ngIf="isNoMinMaxLoading"
+        mode="indeterminate"
+        diameter="20"
+      >
       </mat-progress-spinner>
     </div>
   </div>

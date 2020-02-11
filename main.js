@@ -1,12 +1,49 @@
-const app = require( 'electron' ).app
-const BrowserWindow = require( 'electron' ).BrowserWindow
+const app = require( 'electron' ).app;
+const { BrowserWindow, ipcMain, screen } = require( 'electron' );
 const isDev = process.argv.includes( '--dev' );
 const path = require( 'path' );
 const settings = require( 'electron-settings' );
+const fs = require( 'fs' );
+
+const overlayPath = __dirname + '/overlay.html';
+
+console.log( __dirname );
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let mainWindow;
+let mainWindow, overlay;
+
+ipcMain.on( 'show-overley', ( _event, template, dimensions ) => {
+    fs.writeFileSync( overlayPath, template );
+    if( !overlay ) {
+        createOverlay( dimensions )
+    }
+    overlay.loadFile( overlayPath )
+} )
+
+function createOverlay( dimensions ) {
+    const pos = screen.getCursorScreenPoint();
+    overlay = new BrowserWindow( {
+        x: pos.x,
+        y: pos.y,
+        frame: false,
+        alwaysOnTop: true,
+        show: false,
+        ...dimensions
+    } );
+    overlay.on( 'closed', function () {
+        overlay = null
+    } )
+    overlay.once( 'ready-to-show', () => {
+        overlay.show();
+        overlay.focus();
+        overlay.webContents.focus();
+        // overlay.on( 'blur', function () {
+        //     overlay.close();
+        //     overlay = null
+        // } )
+    } )
+}
 
 async function createWindow() {
     const bounds = getBounds();
@@ -22,11 +59,11 @@ async function createWindow() {
         }
     } )
 
-    if ( bounds.isMaximized ) {
+    if( bounds.isMaximized ) {
         mainWindow.maximize();
     }
 
-    if ( isDev ) {
+    if( isDev ) {
         mainWindow.loadURL( 'http://localhost:4200' );
         // mainWindow.webContents.openDevTools()
     } else {
@@ -58,13 +95,13 @@ app.on( 'ready', createWindow )
 app.on( 'window-all-closed', function () {
     // On macOS it is common for applications and their menu bar
     // to stay active until the user quits explicitly with Cmd + Q
-    if ( process.platform !== 'darwin' ) app.quit()
+    if( process.platform !== 'darwin' ) app.quit()
 } )
 
 app.on( 'activate', function () {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
-    if ( mainWindow === null ) createWindow()
+    if( mainWindow === null ) createWindow()
 } )
 
 // In this file you can include the rest of your app's specific main process
@@ -72,7 +109,7 @@ app.on( 'activate', function () {
 
 function getBounds() {
     // Restore from appConfig
-    if ( settings.has( `windowState` ) ) {
+    if( settings.has( `windowState` ) ) {
         return settings.get( `windowState` );
     }
 
@@ -88,7 +125,7 @@ function getBounds() {
 function setBounds( window ) {
     let windowState;
 
-    if ( window.isMaximized() ) {
+    if( window.isMaximized() ) {
         windowState = getBounds();
     } else {
         windowState = window.getBounds();

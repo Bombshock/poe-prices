@@ -40,3 +40,13 @@ body {
   margin: 0;
   padding: 0;
 }
+
+body.overlay {
+  padding: 24px;
+  display: flex;
+  justify-content: center;
+
+  .hide-for-overlay {
+    display: none !important;
+  }
+}
