@@ -28,11 +28,7 @@ export class StashContainerComponent implements OnInit {
         if( params.index ) {
           this.setIndex( params.index );
         }
-        if( this.cache[ this.activeIndex ] ) {
-          this.stashResult.items = this.cache[ this.activeIndex ];
-        } else {
-          this.refresh();
-        }
+        this.refresh();
       } )
     } );
     this.auth.league.subscribe( league => {

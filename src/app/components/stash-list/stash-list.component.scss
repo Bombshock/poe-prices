@@ -20,7 +20,7 @@
 .stash-list__list {
   overflow-y: auto;
 
-  > * {
+  >* {
     min-height: 36px;
   }
 
@@ -53,39 +53,51 @@
   }
 
   &.PremiumStash::after {
-    background-image: url("https://www.pathofexile.com/image/layout/stash/premium-tab-icon.png");
+    background-image: url('https://www.pathofexile.com/image/layout/stash/premium-tab-icon.png?1600589048063');
   }
 
   &.CurrencyStash::after {
-    background-image: url("https://www.pathofexile.com/image/layout/stash/currency-tab-icon.png");
+    background-image: url('https://www.pathofexile.com/image/layout/stash/currency-tab-icon.png?1600589047987');
   }
 
   &.MapStash::after {
-    background-image: url("https://www.pathofexile.com/image/layout/stash/map-tab-icon.png");
+    background-image: url('https://www.pathofexile.com/image/layout/stash/map-tab-icon.png?1600589048003');
   }
 
   &.DivinationCardStash::after {
-    background-image: url("https://www.pathofexile.com/image/layout/stash/divination-tab-icon.png");
+    background-image: url('https://www.pathofexile.com/image/layout/stash/divination-tab-icon.png?1600589047987');
   }
 
   &.QuadStash::after {
-    background-image: url("https://www.pathofexile.com/image/layout/stash/quad-tab-icon.png");
+    background-image: url('https://www.pathofexile.com/image/layout/stash/quad-tab-icon.png?1600589048063');
   }
 
   &.EssenceStash::after {
-    background-image: url("https://www.pathofexile.com/image/layout/stash/essence-tab-icon.png");
+    background-image: url('https://www.pathofexile.com/image/layout/stash/essence-tab-icon.png?1600589047987');
   }
 
   &.FragmentStash::after {
-    background-image: url("https://www.pathofexile.com/image/layout/stash/fragment-tab-icon.png");
+    background-image: url('https://www.pathofexile.com/image/layout/stash/fragment-tab-icon.png?1600589047987');
   }
 
   &.UniqueStash::after {
-    background-image: url("https://www.pathofexile.com/image/layout/stash/unique-tab-icon.png");
+    background-image: url('https://www.pathofexile.com/image/layout/stash/unique-tab-icon.png?1600589048079');
   }
 
   &.DelveStash::after {
-    background-image: url("https://www.pathofexile.com/image/layout/stash/delve-tab-icon.png");
+    background-image: url('https://www.pathofexile.com/image/layout/stash/delve-tab-icon.png?1600589047987');
+  }
+
+  &.BlightStash::after {
+    background-image: url('https://www.pathofexile.com/image/layout/stash/blight-tab-icon.png?1600589047987');
+  }
+
+  &.MetamorphStash::after {
+    background-image: url('https://www.pathofexile.com/image/layout/stash/metamorph-tab-icon.png?1600589048063');
+  }
+
+  &.DeliriumStash::after {
+    background-image: url('https://www.pathofexile.com/image/layout/stash/delirium-tab-icon.png?1600589047987');
   }
 }
 

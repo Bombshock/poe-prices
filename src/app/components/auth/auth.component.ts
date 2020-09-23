@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component( {
@@ -22,17 +21,22 @@ export class AuthComponent implements OnInit {
   }
 
   ngOnInit() {
-    if ( this.session && this.username && !this.isLoading && this.auth.autoLogin ) {
+    if( this.session && this.username && !this.isLoading && this.auth.autoLogin ) {
       this.send();
     }
   }
 
   public async send() {
-    if ( this.session && this.username && !this.isLoading ) {
+    if( this.session && this.username && !this.isLoading ) {
       this.isLoading = true;
-      await this.auth.authorize( this.username, this.session );
-      this.isLoading = false;
-      this.couldNotLogin = !this.auth.authorized;
+      try {
+        await this.auth.authorize( this.username, this.session );
+        this.isLoading = false;
+        this.couldNotLogin = !this.auth.authorized;
+      } catch( _e ) {
+        this.isLoading = false;
+        this.couldNotLogin = true;
+      }
     }
   }
 }

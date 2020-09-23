@@ -1,15 +1,15 @@
 {
   "name": "poe-prices",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "scripts": {
     "ng": "ng",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "start": "electron . --dev",
-    "build": "build-web && build-exe",
+    "build": "npm run build-web && npm run build-exe",
     "build-web": "ng build --prod",
-    "build-exe": "cross-env CSC_LINK=/projekte/poe-prices/build/mycert.pfx electron-builder"
+    "build-exe": "node build.js"
   },
   "author": "Bombshock",
   "description": "App to determine the value of an item in PoE",

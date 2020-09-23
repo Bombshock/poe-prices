@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { StashContainerComponent } from '../stash-container/stash-container.component';
 import { ComparatorService } from 'src/app/services/comparator.service';
 import { Item, ItemQueryResultMapped } from 'src/app/models/item';
@@ -14,12 +14,15 @@ import { PriceService } from 'src/app/services/price.service';
   templateUrl: './stash-details.component.html',
   styleUrls: [ './stash-details.component.scss' ]
 } )
-export class StashDetailsComponent implements OnInit {
+export class StashDetailsComponent implements OnInit, OnChanges {
+
+  @Input() stash;
 
   public scale = 47;
   public open = 0;
   public max = 0;
   public textQuery = '';
+  public items: Item[] = [];
 
   public currency: StaticGroup;
   public currencyMap: { [ key: string ]: StaticItem } = {};
@@ -34,14 +37,20 @@ export class StashDetailsComponent implements OnInit {
     private api: ApiService,
     private comp: ComparatorService,
     private price: PriceService
-  ) { }
-
-  get items(): Item[] {
-    return this.filter.transform( this.container.stashResult.items, this.textQuery )
+  ) {
+    console.log( this );
   }
 
   get queueLength() {
     return this.queue.length;
+  }
+
+  public ngOnChanges() {
+    if( this.container && this.container.stashResult ) {
+      this.items = this.filter.transform( this.container.stashResult.items, this.textQuery );
+    } else {
+      this.items = [];
+    }
   }
 
   public async ngOnInit() {
@@ -71,7 +80,8 @@ export class StashDetailsComponent implements OnInit {
             item.priceInChaos = this.price.calculate( item );
             activeStash.priceMap[ item.id ] = item.priceInChaos;
             this.open--;
-            return wait( 500 );
+            this.ngOnChanges();
+            return wait( 1000 / this.api.allowedRequestsPerSecond );
           } )
       } )
     } );
@@ -84,9 +94,10 @@ export class StashDetailsComponent implements OnInit {
     } );
   }
 
-  private next() {
+  private async next() {
     if( this.queue.length ) {
-      this.queue.shift()().then( () => wait( 200 ) ).then( () => this.next() )
+      await this.queue.shift()();
+      this.next();
     }
   }
 }

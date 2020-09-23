@@ -1,60 +1,117 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row>
-    <label class="spacer stash-details__searchbar" fxLayout="row">
+    <label
+      class="spacer stash-details__searchbar"
+      fxLayout="row"
+    >
       <mat-icon>search</mat-icon>
-      <input fxFlex="1" [(ngModel)]="textQuery">
-      <mat-icon (click)="textQuery = ''" *ngIf="textQuery != ''" class="stash-details__searchbar__clear-input">close
+      <input
+        fxFlex="1"
+        [(ngModel)]="textQuery"
+        (ngModelChange)="ngOnChanges()"
+      >
+      <mat-icon
+        (click)="textQuery = ''; ngOnChanges()"
+        *ngIf="textQuery != ''"
+        class="stash-details__searchbar__clear-input"
+      >close
       </mat-icon>
     </label>
-    <button mat-icon-button *ngIf="queueLength == 0">
-      <mat-icon aria-label="load" (click)="load()">play_circle_filled</mat-icon>
+    <button
+      mat-icon-button
+      *ngIf="queueLength == 0"
+    >
+      <mat-icon
+        aria-label="load"
+        (click)="load()"
+      >play_circle_filled</mat-icon>
     </button>
-    <button mat-icon-button *ngIf="queueLength != 0">
-      <mat-icon aria-label="stop" (click)="stop()">stop</mat-icon>
+    <button
+      mat-icon-button
+      *ngIf="queueLength != 0"
+    >
+      <mat-icon
+        aria-label="stop"
+        (click)="stop()"
+      >stop</mat-icon>
     </button>
   </mat-toolbar-row>
 </mat-toolbar>
 
 <div class="stash-details__progress">
-  <mat-progress-bar *ngIf="open > 0" mode="determinate" [value]="100 - (open / max * 100)">
+  <mat-progress-bar
+    *ngIf="open > 0"
+    mode="determinate"
+    [value]="100 - (open / max * 100)"
+  >
   </mat-progress-bar>
 </div>
 
-<div fxFlex="1" fxLayout="column" style="overflow-y: auto;" *ngIf="container.activeStash">
+<div
+  fxFlex="1"
+  fxLayout="column"
+  style="overflow-y: auto;"
+  *ngIf="container.activeStash"
+>
   <mat-list role="list">
-    <mat-list-item role="listitem" *ngFor="let item of items">
-      <div fxFlex="1" fxLayout="row">
-        <span *ngIf="container.activeStash.type == 'PremiumStash' || container.activeStash.type == 'NormalStash'"
-          class="stash-details__item-list__item__coords">
+    <mat-list-item
+      role="listitem"
+      *ngFor="let item of items"
+    >
+      <div
+        fxFlex="1"
+        fxLayout="row"
+      >
+        <span
+          *ngIf="container.activeStash.type == 'PremiumStash' || container.activeStash.type == 'NormalStash'"
+          class="stash-details__item-list__item__coords"
+        >
           {{ item.x }} | {{ item.y }}
         </span>
-        <button mat-button fxFlex="1" class="stash-details__item-list__item" (click)="showItem(item)">
+        <button
+          mat-button
+          fxFlex="1"
+          class="stash-details__item-list__item"
+          (click)="showItem(item)"
+        >
           <span *ngIf="item.name">
             {{ item.name }} -
           </span>
           {{ item.typeLine }}
         </button>
-        <div class="stash-details__item-list__item__stacks" *ngIf="item.maxStackSize">
+        <div
+          class="stash-details__item-list__item__stacks"
+          *ngIf="item.maxStackSize"
+        >
           {{ item.stackSize || '1' }}
           <span class="stash-details__item-list__item__max-stack-size">
             / {{ item.maxStackSize }}
           </span>
         </div>
-        <app-item-price [chaos]="item.priceInChaos" class="stash-details__item-list__item__worth">
+        <app-item-price
+          [chaos]="item.priceInChaos || container.activeStash && container.activeStash.priceMap ? container.activeStash.priceMap[item.id] : null"
+          class="stash-details__item-list__item__worth"
+        >
         </app-item-price>
       </div>
       <mat-divider></mat-divider>
     </mat-list-item>
   </mat-list>
 
-  <div fxFlex="1"
+  <div
+    fxFlex="1"
     *ngIf="items.length == 0 && (container.activeStash.type == 'MapStash' || container.activeStash.type == 'UniqueStash')"
-    class="center-box">
+    class="center-box"
+  >
     This stash type is currently not supported by PoE API :(
   </div>
 </div>
 
-<div fxFlex="1" *ngIf="!container.activeStash" class="center-box">
+<div
+  fxFlex="1"
+  *ngIf="!container.activeStash"
+  class="center-box"
+>
   <mat-progress-spinner mode="indeterminate">
   </mat-progress-spinner>
 </div>

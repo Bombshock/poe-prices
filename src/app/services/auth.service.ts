@@ -23,7 +23,7 @@ export class AuthService {
     private title: TitleService
   ) {
     this.league.subscribe( league => {
-      if ( league ) {
+      if( league ) {
         this.title.suffix = league;
       }
     } )
@@ -38,6 +38,7 @@ export class AuthService {
   }
 
   public async authorize( username: string, session: string ) {
+    console.log( 'authorizing with', username, session );
     window.localStorage.setItem( 'session', session );
     window.localStorage.setItem( 'username', username );
 
@@ -51,7 +52,11 @@ export class AuthService {
       value: session
     } );
 
-    this.characters = await this.http.get<Character[]>( `https://www.pathofexile.com/character-window/get-characters?accountName=${ username }` ).toPromise();
+    try {
+      this.characters = await this.getCharacters( username );
+    } catch( e ) {
+      console.log( e );
+    }
 
     const lastChar = this.characters.find( c => c.lastActive );
 
@@ -76,5 +81,9 @@ export class AuthService {
   public logout() {
     this.authorized = false;
     this.autoLogin = false;
+  }
+
+  private getCharacters( username: string ): Promise<Character[]> {
+    return this.http.get<Character[]>( `https://www.pathofexile.com/character-window/get-characters?accountName=${ username }` ).toPromise()
   }
 }

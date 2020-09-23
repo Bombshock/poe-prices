@@ -30,6 +30,7 @@ import { ItemFilterPipe } from './pipes/item-filter.pipe';
 import { ItemDetailsComponent } from './components/item-details/item-details.component';
 import { ItemPriceComponent } from './components/item-price/item-price.component';
 import { environment } from 'src/environments/environment';
+import { SnackbarTimerComponent } from './components/snackbar-timer/snackbar-timer.component';
 
 const appRoutes: Routes = [
   {
@@ -59,7 +60,8 @@ const appRoutes: Routes = [
     StashDetailsComponent,
     ItemFilterPipe,
     ItemDetailsComponent,
-    ItemPriceComponent
+    ItemPriceComponent,
+    SnackbarTimerComponent
   ],
   imports: [
     BrowserModule,

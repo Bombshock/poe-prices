@@ -3,47 +3,17 @@ const { BrowserWindow, ipcMain, screen } = require( 'electron' );
 const isDev = process.argv.includes( '--dev' );
 const path = require( 'path' );
 const settings = require( 'electron-settings' );
-const fs = require( 'fs' );
-
-const overlayPath = __dirname + '/overlay.html';
 
 console.log( __dirname );
 
+const webPreferences = {
+    webSecurity: false,
+    nodeIntegration: true
+};
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let mainWindow, overlay;
-
-ipcMain.on( 'show-overley', ( _event, template, dimensions ) => {
-    // fs.writeFileSync( overlayPath, template );
-    // if( !overlay ) {
-    //     createOverlay( dimensions )
-    // }
-    // overlay.loadFile( overlayPath )
-} )
-
-function createOverlay( dimensions ) {
-    const pos = screen.getCursorScreenPoint();
-    overlay = new BrowserWindow( {
-        x: pos.x,
-        y: pos.y,
-        frame: false,
-        alwaysOnTop: true,
-        show: false,
-        ...dimensions
-    } );
-    overlay.on( 'closed', function () {
-        overlay = null
-    } )
-    overlay.once( 'ready-to-show', () => {
-        overlay.show();
-        overlay.focus();
-        overlay.webContents.focus();
-        // overlay.on( 'blur', function () {
-        //     overlay.close();
-        //     overlay = null
-        // } )
-    } )
-}
+let mainWindow;
 
 async function createWindow() {
     const bounds = getBounds();
@@ -52,11 +22,7 @@ async function createWindow() {
     mainWindow = new BrowserWindow( {
         ...bounds,
         frame: false,
-        webPreferences: {
-            // preload: path.join( __dirname, 'preload.js' )
-            webSecurity: false,
-            nodeIntegration: true
-        }
+        webPreferences
     } )
 
     if( bounds.isMaximized ) {

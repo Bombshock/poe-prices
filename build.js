@@ -11,11 +11,6 @@ rimraf( `${ __dirname }/dist-build` )
 exec( `npx electron-builder` );
 zipIt();
 
-function copy( src, dest ) {
-  const srcFile = readFileSync( src );
-  writeFileSync( dest, srcFile );
-}
-
 function rimraf( path ) {
   if( platform() === 'win32' ) {
     exec( `rd /s /q "${ path }"` )
