@@ -50,7 +50,7 @@ function zipIt() {
     } );
 
     archive.pipe( output );
-    archive.append( createReadStream( pathToExe ), { name: exeName } );
+    archive.append( createReadStream( pathToExe ), { name: `${ exeName }.${ ext }` } );
     archive.finalize();
   } );
 }
